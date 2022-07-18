@@ -1,18 +1,7 @@
-let a=["","one ", "two ", "three ", "four ", "five ", "six ", "seven ", "eight ", "nine ", "ten ", "eleven ", "twelve ", "thirteen ", "fourteen ", "fifteen ", "sixteen ", "eventeen ", "eighteen ","nineteen"]
-let b=["","", "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety"]
-function convertInWord(input){
-    if (typeof input != 'number') return "empty value";
-    let output="";
-    let num=("000000000000"+input).slice(-12).match(/^(\d{2})(\d{1})(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
-    output += (num[1] !=0) ? (a[num[1]] ||  b[num[1][0]] + ' ' + a[num[1][1]]) + " thousand crore " : "";    
-    output += (num[2] !=0) ? (a[num[2]] ||  b[num[2][0]] + ' ' + a[num[2][1]]) + " hundred crore " : "";
-    output += (num[3] !=0) ? (a[num[3]] ||  b[num[3][0]] + ' ' + a[num[3][1]]) + " crore " : "";
-    output += (num[4] !=0) ? (a[num[4]] ||  b[num[4][0]] + ' ' + a[num[4][1]]) + " lakh " : "";
-    output += (num[5] !=0) ? (a[num[5]] ||  b[num[5][0]] + ' ' + a[num[5][1]]) + " thousand " : "";
-    output += (num[6] !=0) ? (a[num[6]] ||  b[num[6][0]] + ' ' + a[num[6][1]]) + " hundred " : "";
-    output += (num[7] !=0) ? ((output !="") ? "and " : "") + (a[num[7]] ||  b[num[7][0]] + ' ' + a[num[7][1]]) + " only" : "";
-    return output
-}
-
-let _convertInWord=convertInWord(200000000)
-console.log(_convertInWord)
+const a = ["", "one ", "two ", "three ", "four ", "five ", "six ", "seven ", "eight ", "nine ", "ten ", "eleven ", "twelve ", "thirteen ", "fourteen ", "fifteen ", "sixteen ", "eventeen ", "eighteen ", "nineteen"];
+const b = ["", "", "twenty ", "thirty ", "fourty ", "fifty ", "sixty ", "seventy ", "eighty ", "ninety "]; const c = ["", "thousand ", "million ", "billion ", "trillion ", "quadrillion ", "quintillion ", "sextillion ", "septillion ", "octillion ", "nonillion ", "decillion ", "Googol ", "Centillion ", "Googolplex ", "Skewer's Number "]
+const convertInWord = (input) => {
+    if (Number.isNaN(input)) return "Invalid Input!!! \n" + input; if (!(input > 0)) return "Not Allowed! input number should be greater than 0\n" + input; if (input > 1e+47) return "Not allowed! \n The number is greater than 1e+47 \n Greater than 1e+308 is infinite number"; if (!Number.isFinite(input)) return "Number is Infinity! \n Greater than 1e+308 is infinite number";
+    let output = ""; const num2 = input.toLocaleString().split(",");
+    num2.forEach((item, index) => { if (num2[index] != 0) output += ((num2[index].length == 3) ? a[num2[index][0]] + "hundred " + (a[num2[index][1] + num2[index][2]] || b[num2[index][1]] + a[num2[index][2]]) : (a[num2[index]] || b[num2[index][0]] + a[num2[index][1]])) + (c[num2.length - 1 - index]); }); return { output: output + "only", input: input.toLocaleString() + " =" }
+}; console.log(convertInWord(+prompt("Type Amount", 1e+44))) // 1e+44 is one hundred Googolplexonly // Greater than 1e+308 is infinite number
